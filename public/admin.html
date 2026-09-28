@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Panel — Sree Sivasakthi Dairy Farm</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/theme-light-blue.css">
+</head>
+<body>
+
+<div class="admin-bar full-bleed">
+  <span>Sree Sivasakthi Dairy Farm — Admin Panel</span>
+  <a href="index.html">&larr; Back to site</a>
+</div>
+
+<div class="wrap">
+  <div class="admin-head">
+    <div class="eyebrow-sm">delivery book</div>
+    <h1>Customers</h1>
+    <p>Everyone who has registered on the site, organised by morning and evening delivery rounds.</p>
+  </div>
+
+  <div class="storage-note" id="statusNote">Loading customers…</div>
+
+  <div class="stat-row">
+    <div class="stat-tile"><div class="num" id="statTotal">0</div><div class="lbl">Total customers</div></div>
+    <div class="stat-tile"><div class="num" id="statMorning">0</div><div class="lbl">Morning round</div></div>
+    <div class="stat-tile"><div class="num" id="statEvening">0</div><div class="lbl">Evening round</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-top">
+      <div class="tabs" role="tablist" aria-label="Delivery round">
+        <button class="tab-btn" data-shift="morning" role="tab" aria-selected="true" id="tabMorning">
+          <span class="dot"></span> Morning <span class="count" id="countMorning">(0)</span>
+        </button>
+        <button class="tab-btn" data-shift="evening" role="tab" aria-selected="false" id="tabEvening">
+          <span class="dot"></span> Evening <span class="count" id="countEvening">(0)</span>
+        </button>
+      </div>
+      <a class="btn btn-primary" href="register.html" target="_blank" rel="noopener">+ Register customer</a>
+    </div>
+
+    <ul class="cust-list" id="custList"></ul>
+    <div class="empty-state" id="emptyState" hidden>
+      <div class="eyebrow-sm">No customers yet</div>
+      <p>No <span id="emptyShiftLabel">morning</span> customers have registered yet. Use "+ Register customer" above to add one, or share the registration page.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var state = {
+    shift: 'morning',
+    all: [],
+    pendingDelete: null
+  };
+
+  var els = {
+    tabMorning: document.getElementById('tabMorning'),
+    tabEvening: document.getElementById('tabEvening'),
+    countMorning: document.getElementById('countMorning'),
+    countEvening: document.getElementById('countEvening'),
+    statTotal: document.getElementById('statTotal'),
+    statMorning: document.getElementById('statMorning'),
+    statEvening: document.getElementById('statEvening'),
+    list: document.getElementById('custList'),
+    empty: document.getElementById('emptyState'),
+    emptyShiftLabel: document.getElementById('emptyShiftLabel'),
+    statusNote: document.getElementById('statusNote')
+  };
+
+  function formatDate(iso) {
+    if (!iso) return '';
+    try {
+      var d = new Date(iso.replace(' ', 'T') + 'Z');
+      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function loadCustomers() {
+    els.statusNote.hidden = false;
+    els.statusNote.textContent = 'Loading customers…';
+    return fetch('/api/admin/customers', { credentials: 'same-origin' })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Request failed: ' + res.status);
+        return res.json();
+      })
+      .then(function (data) {
+        state.all = data.customers || [];
+        els.statusNote.hidden = true;
+        render();
+      })
+      .catch(function (err) {
+        console.error('load customers failed', err);
+        els.statusNote.hidden = false;
+        els.statusNote.textContent = 'Could not load customers — make sure the server is running, then reload this page.';
+      });
+  }
+
+  function setTab(shift) {
+    state.shift = shift;
+    els.tabMorning.setAttribute('aria-selected', String(shift === 'morning'));
+    els.tabEvening.setAttribute('aria-selected', String(shift === 'evening'));
+    els.emptyShiftLabel.textContent = shift;
+    render();
+  }
+  els.tabMorning.addEventListener('click', function () { setTab('morning'); });
+  els.tabEvening.addEventListener('click', function () { setTab('evening'); });
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function render() {
+    var morning = state.all.filter(function (c) { return c.deliveryPreference === 'morning'; });
+    var evening = state.all.filter(function (c) { return c.deliveryPreference === 'evening'; });
+    var list = state.shift === 'morning' ? morning : evening;
+
+    els.countMorning.textContent = '(' + morning.length + ')';
+    els.countEvening.textContent = '(' + evening.length + ')';
+    els.statMorning.textContent = morning.length;
+    els.statEvening.textContent = evening.length;
+    els.statTotal.textContent = state.all.length;
+
+    if (list.length === 0) {
+      els.list.innerHTML = '';
+      els.empty.hidden = false;
+      return;
+    }
+    els.empty.hidden = true;
+
+    els.list.innerHTML = list.map(function (d) {
+      var qtyText = (d.dailyQuantity || d.dailyQuantity === 0) ? (d.dailyQuantity + ' L/day') : '';
+      var address = [d.houseNumber, d.street, d.area, d.city, d.pincode].filter(Boolean).join(', ');
+      var metaParts = [];
+      if (d.mobileNumber) metaParts.push(escapeHtml(d.mobileNumber));
+      if (address) metaParts.push(escapeHtml(address));
+      var joined = formatDate(d.createdAt);
+      if (joined) metaParts.push('joined ' + escapeHtml(joined));
+      var confirming = state.pendingDelete === String(d.id);
+      var initial = (d.fullName || '?').trim().charAt(0).toUpperCase() || '?';
+      var avatar = '<span class="avatar-fallback">' + escapeHtml(initial) + '</span>';
+      return (
+        '<li class="cust-row" data-id="' + d.id + '">' +
+          avatar +
+          '<div class="who">' +
+            '<div class="nm-row"><span class="nm">' + escapeHtml(d.fullName || 'Unnamed') + '</span>' +
+              (d.customerCode ? '<span class="code">' + escapeHtml(d.customerCode) + '</span>' : '') +
+            '</div>' +
+            (metaParts.length ? '<div class="meta">' + metaParts.join(' · ') + '</div>' : '') +
+          '</div>' +
+          '<div class="qty">' + qtyText + '</div>' +
+          '<button type="button" class="del-btn' + (confirming ? ' confirm' : '') + '" data-id="' + d.id + '">' +
+            (confirming ? 'Confirm?' : 'Remove') +
+          '</button>' +
+        '</li>'
+      );
+    }).join('');
+  }
+
+  els.list.addEventListener('click', function (e) {
+    var btn = e.target.closest('.del-btn');
+    if (!btn) return;
+    var id = btn.getAttribute('data-id');
+    if (state.pendingDelete === id) {
+      btn.disabled = true;
+      fetch('/api/admin/customers/' + encodeURIComponent(id), { method: 'DELETE', credentials: 'same-origin' })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Delete failed: ' + res.status);
+          state.all = state.all.filter(function (c) { return String(c.id) !== String(id); });
+          state.pendingDelete = null;
+          render();
+        })
+        .catch(function (err) {
+          console.error('delete customer failed', err);
+          btn.disabled = false;
+          alert('Could not remove this customer. Make sure the server is running and try again.');
+        });
+    } else {
+      state.pendingDelete = id;
+      render();
+      setTimeout(function () {
+        if (state.pendingDelete === id) { state.pendingDelete = null; render(); }
+      }, 3000);
+    }
+  });
+
+  loadCustomers();
+})();
+</script>
+</body>
+</html>

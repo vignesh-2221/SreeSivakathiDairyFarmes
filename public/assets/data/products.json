@@ -1,0 +1,50 @@
+[
+  {
+    "id": "cow-milk",
+    "name": "Fresh Cow Milk",
+    "description": "Pure cow milk collected daily and chilled immediately to lock in farm-fresh taste.",
+    "icon": "milk",
+    "image": "assets/images/milk.webp",
+    "unit": "Sold per litre",
+    "measureUnit": "ml",
+    "quantityOptions": ["250 ml", "500 ml", "1000 ml"],
+    "price": null,
+    "priceLabel": "Price available soon"
+  },
+  {
+    "id": "curd",
+    "name": "Fresh Curd",
+    "description": "Thick, set curd made fresh every day from full-cream milk — mild, tangy and consistent.",
+    "icon": "curd",
+    "image": "assets/images/curd.png",
+    "unit": "Sold per kg",
+    "measureUnit": "g",
+    "quantityOptions": ["250 g", "500 g", "1000 g"],
+    "price": null,
+    "priceLabel": "Price available soon"
+  },
+  {
+    "id": "butter",
+    "name": "Fresh Butter",
+    "description": "Hand-churned white butter from fresh cream — rich, unsalted and ready for your kitchen.",
+    "icon": "butter",
+    "image": "assets/images/butter.png",
+    "unit": "Sold per kg",
+    "measureUnit": "g",
+    "quantityOptions": ["250 g", "500 g", "1000 g"],
+    "price": null,
+    "priceLabel": "Price available soon"
+  },
+  {
+    "id": "cow-ghee",
+    "name": "Pure Cow Ghee",
+    "description": "Slow-simmered, traditional bilona-style cow ghee with a deep aroma, made in small batches.",
+    "icon": "ghee",
+    "image": "assets/images/ghee.png",
+    "unit": "Sold per litre / jar",
+    "measureUnit": "ml",
+    "quantityOptions": ["250 ml", "500 ml", "1000 ml"],
+    "price": null,
+    "priceLabel": "Price available soon"
+  }
+]

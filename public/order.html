@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Place an Order — Sree Sivasakthi Dairy Farm</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/theme-light-blue.css">
+<link rel="stylesheet" href="assets/home.css">
+<style>
+  .product-pick-grid { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+  .product-pick {
+    display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center;
+    border: 1.5px solid var(--border); border-radius: 14px; padding: 14px 10px; cursor: pointer;
+    background: var(--surface);
+  }
+  .product-pick.selected { border-color: var(--primary); background: var(--primary-tint); }
+  .product-pick input { position: absolute; opacity: 0; pointer-events: none; }
+  .product-pick .pick-icon { width: 34px; height: 34px; color: var(--primary); }
+  .product-pick .pick-icon svg { width: 100%; height: 100%; }
+  .product-pick .pick-name { font-size: 13px; font-weight: 600; }
+  .qty-unit-suffix { font-size: 13px; color: var(--text-muted); margin-left: 6px; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="nav">
+    <a class="brand" href="index.html" style="text-decoration:none;">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="var(--primary-tint)" stroke="var(--primary)" stroke-width="1.4"/>
+        <path d="M16 11h8l1.4 4.4c.5 1.6.9 3.3.9 5v9.1c0 1.4-1.1 2.5-2.5 2.5h-7.6a2.5 2.5 0 0 1-2.5-2.5v-9.1c0-1.7.4-3.4.9-5L16 11Z" stroke="var(--primary)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M15.4 13.5h9.2" stroke="var(--primary)" stroke-width="1.5"/>
+        <path d="M14.5 21c1.3.9 2.4 1.2 3.5.4 1.3-.9 2.2-.9 3.5 0 1.3.9 2.2.9 3.5 0" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <div class="brand-text">
+        <div class="name">Sree Sivasakthi Dairy Farm</div>
+        <div class="tag">FRESH FROM FARM, DAILY</div>
+      </div>
+    </a>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="index.html#products">Products</a>
+      <a href="dashboard.html">My Account</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap auth-shell">
+  <div class="auth-card" style="max-width:620px;">
+
+    <!-- Not signed in (direct link, expired session, etc.) -->
+    <div id="signedOutState" hidden style="text-align:center;">
+      <div class="auth-head" style="text-align:center;">
+        <div class="eyebrow-sm">order online</div>
+        <h1>Log in to place an order</h1>
+        <p>Create a free account or log in to order fresh dairy products for delivery.</p>
+      </div>
+      <div class="auth-actions" style="justify-content:center; margin-top:22px;">
+        <a class="btn btn-ghost" id="signedOutLogin" href="login.html">Log In</a>
+        <a class="btn btn-primary" id="signedOutRegister" href="register.html">Create Account</a>
+      </div>
+    </div>
+
+    <!-- Order form -->
+    <div id="orderFormState" hidden>
+      <div class="auth-head">
+        <div class="eyebrow-sm">order online</div>
+        <h1>Place an Order</h1>
+        <p>Pick a product and quantity — we'll add it to your delivery.</p>
+      </div>
+
+      <form id="orderForm" novalidate>
+        <div class="form-section">
+          <div class="section-label">Choose a product</div>
+          <div class="product-pick-grid" id="productPickGrid"></div>
+          <p id="productDescription" style="color:var(--text-muted); font-size:13.5px; margin-top:12px;"></p>
+        </div>
+
+        <div class="form-section">
+          <div class="section-label">Quantity</div>
+          <div class="pref-group" id="qtyGroup"></div>
+          <div class="field" id="customQtyField" hidden style="margin-top:12px;">
+            <label for="customQtyInput">Enter your quantity<span class="qty-unit-suffix" id="customQtyUnit"></span></label>
+            <input type="number" id="customQtyInput" min="1" max="20000" step="1" placeholder="e.g. 750">
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="field full">
+            <label for="orderNotes">Delivery notes <span class="opt">(optional)</span></label>
+            <input id="orderNotes" name="orderNotes" type="text" maxlength="300" placeholder="e.g. leave at the gate, call before delivery">
+          </div>
+        </div>
+
+        <div class="form-banner" id="formBanner" role="alert"></div>
+
+        <div class="auth-actions">
+          <span class="switch-link" id="loggedInAs"></span>
+          <button type="submit" class="btn btn-primary" id="submitBtn">Place Order</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Confirmation -->
+    <div id="successState" hidden style="text-align:center;">
+      <div class="auth-head" style="text-align:center;">
+        <div class="eyebrow-sm">order placed</div>
+        <h1>Thank you — your order is in!</h1>
+        <p id="successSummary"></p>
+      </div>
+      <div class="code-callout show" style="justify-content:center; text-align:center;">
+        <div>
+          <div class="code-label">Order reference</div>
+          <div class="code-value" id="orderCodeValue">—</div>
+        </div>
+      </div>
+      <div class="auth-actions" style="justify-content:center; margin-top:22px;">
+        <a class="btn btn-ghost" href="index.html#products">Order Another Product</a>
+        <a class="btn btn-primary" href="dashboard.html">View My Orders</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="assets/js/product-icons.js"></script>
+<script>
+(function () {
+  var signedOutState = document.getElementById('signedOutState');
+  var orderFormState = document.getElementById('orderFormState');
+  var successState = document.getElementById('successState');
+  var form = document.getElementById('orderForm');
+  var productPickGrid = document.getElementById('productPickGrid');
+  var productDescription = document.getElementById('productDescription');
+  var qtyGroup = document.getElementById('qtyGroup');
+  var customQtyField = document.getElementById('customQtyField');
+  var customQtyUnit = document.getElementById('customQtyUnit');
+  var customQtyInput = document.getElementById('customQtyInput');
+  var banner = document.getElementById('formBanner');
+  var submitBtn = document.getElementById('submitBtn');
+  var loggedInAs = document.getElementById('loggedInAs');
+  var ICONS = window.SSD_PRODUCT_ICONS || {};
+
+  var params = new URLSearchParams(window.location.search);
+  var requestedProductId = params.get('product');
+
+  function safeNext(path) {
+    if (!path) return null;
+    if (path.indexOf('://') !== -1) return null;
+    if (path.indexOf('//') === 0) return null;
+    return path;
+  }
+  var here = safeNext(window.location.pathname.replace(/^\//, '') + window.location.search);
+
+  var products = [];
+  var selectedProductId = null;
+
+  function renderProductPicker() {
+    var match = products.find(function (p) { return p.id === requestedProductId; });
+    selectedProductId = match ? match.id : (products[0] && products[0].id);
+
+    productPickGrid.innerHTML = products.map(function (p) {
+      var selected = p.id === selectedProductId;
+      return (
+        '<label class="product-pick' + (selected ? ' selected' : '') + '">' +
+          '<input type="radio" name="productChoice" value="' + p.id + '"' + (selected ? ' checked' : '') + '>' +
+          '<span class="pick-icon">' + (ICONS[p.icon] || '') + '</span>' +
+          '<span class="pick-name">' + p.name + '</span>' +
+        '</label>'
+      );
+    }).join('');
+
+    renderSelectedProduct();
+  }
+
+  productPickGrid.addEventListener('change', function (e) {
+    if (e.target.name !== 'productChoice') return;
+    selectedProductId = e.target.value;
+    Array.prototype.forEach.call(productPickGrid.querySelectorAll('.product-pick'), function (pick) {
+      pick.classList.toggle('selected', pick.querySelector('input').checked);
+    });
+    renderSelectedProduct();
+  });
+
+  function renderSelectedProduct() {
+    var p = products.find(function (x) { return x.id === selectedProductId; });
+    if (!p) return;
+    productDescription.textContent = p.description + ' (' + p.unit + ')';
+
+    var presets = [250, 500, 1000];
+    qtyGroup.innerHTML = presets.map(function (n, i) {
+      var label = n + ' ' + p.measureUnit;
+      return (
+        '<label class="pref-pill' + (i === 0 ? ' selected' : '') + '">' +
+          '<input type="radio" name="quantityChoice" value="' + label + '"' + (i === 0 ? ' checked' : '') + '>' +
+          '<span><span class="pref-title">' + label + '</span></span>' +
+        '</label>'
+      );
+    }).join('') + (
+      '<label class="pref-pill">' +
+        '<input type="radio" name="quantityChoice" value="__custom__">' +
+        '<span><span class="pref-title">Custom</span></span>' +
+      '</label>'
+    );
+
+    customQtyUnit.textContent = ' (' + p.measureUnit + ')';
+    customQtyField.hidden = true;
+    customQtyInput.value = '';
+  }
+
+  qtyGroup.addEventListener('change', function () {
+    Array.prototype.forEach.call(qtyGroup.querySelectorAll('.pref-pill'), function (pill) {
+      pill.classList.toggle('selected', pill.querySelector('input').checked);
+    });
+    var checked = qtyGroup.querySelector('input[name="quantityChoice"]:checked');
+    customQtyField.hidden = !(checked && checked.value === '__custom__');
+    if (!customQtyField.hidden) customQtyInput.focus();
+  });
+
+  function showBanner(kind, message) {
+    banner.className = 'form-banner show ' + kind;
+    banner.textContent = message;
+  }
+
+  function resolveQuantityLabel() {
+    var checked = form.querySelector('input[name="quantityChoice"]:checked');
+    if (!checked) return null;
+    if (checked.value !== '__custom__') return checked.value;
+
+    var n = parseFloat(customQtyInput.value);
+    var p = products.find(function (x) { return x.id === selectedProductId; });
+    if (!p || !n || n <= 0) return null;
+    return n + ' ' + p.measureUnit;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var quantityLabel = resolveQuantityLabel();
+    if (!quantityLabel) {
+      showBanner('error', 'Choose a quantity, or enter a custom amount.');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Placing order…';
+
+    fetch('/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({
+        productId: selectedProductId,
+        quantityLabel: quantityLabel,
+        notes: document.getElementById('orderNotes').value.trim(),
+      }),
+    })
+      .then(function (res) { return res.json().then(function (data) { return { status: res.status, data: data }; }); })
+      .then(function (result) {
+        if (result.status === 201) {
+          var order = result.data.order;
+          document.getElementById('orderCodeValue').textContent = order.orderCode;
+          document.getElementById('successSummary').textContent =
+            order.quantityLabel + ' of ' + order.productName + ' — we’ll add it to your next delivery.';
+          orderFormState.hidden = true;
+          successState.hidden = false;
+          return;
+        }
+        showBanner('error', (result.data && result.data.message) || 'Could not place your order. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Place Order';
+      })
+      .catch(function () {
+        showBanner('error', 'Could not reach the server. Make sure it is running and try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Place Order';
+      });
+  });
+
+  function init() {
+    var meRequest = fetch('/api/me', { credentials: 'same-origin' });
+    var productsRequest = fetch('assets/data/products.json').then(function (r) { return r.json(); });
+
+    Promise.all([meRequest, productsRequest]).then(function (results) {
+      var meRes = results[0];
+      products = results[1];
+
+      if (meRes.status !== 200) {
+        var next = here || 'order.html';
+        document.getElementById('signedOutLogin').href = 'login.html?next=' + encodeURIComponent(next);
+        document.getElementById('signedOutRegister').href = 'register.html?next=' + encodeURIComponent(next);
+        signedOutState.hidden = false;
+        return;
+      }
+
+      return meRes.json().then(function (data) {
+        loggedInAs.textContent = 'Ordering as ' + data.customer.fullName;
+        renderProductPicker();
+        orderFormState.hidden = false;
+      });
+    }).catch(function () {
+      showBanner('error', 'Could not reach the server. Make sure it is running and reload this page.');
+      orderFormState.hidden = false;
+    });
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>

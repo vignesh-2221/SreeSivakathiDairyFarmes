@@ -1,0 +1,134 @@
+/* Light blue & white theme — the site-wide theme. */
+header.site {
+  background-color: color-mix(in srgb, var(--bg) 90%, transparent);
+  background-image: radial-gradient(circle, var(--accent) 1px, transparent 1.2px);
+  background-size: 16px 16px;
+}
+:root {
+  --bg: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface-2: #EAF4FA;
+  --text: #16232E;
+  --text-muted: #5A7284;
+  --primary: #2E86AB;
+  --primary-dark: #1F5C78;
+  --primary-tint: #E3F1F8;
+  --accent: #5FA8D3;
+  --accent-dark: #2F7AA6;
+  --accent-tint: #DDEEF8;
+  --butter: #8FC7E8;
+  --butter-tint: #EAF5FC;
+  --border: #D7E7F0;
+  --shadow: 0 1px 2px rgba(22,35,46,0.06), 0 10px 26px -14px rgba(22,35,46,0.18);
+  --grain: color-mix(in srgb, var(--primary) 6%, transparent);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1B24;
+    --surface: #16232E;
+    --surface-2: #1C2E3B;
+    --text: #E7F1F7;
+    --text-muted: #9FB6C4;
+    --primary: #6FB8DE;
+    --primary-dark: #8FCBE8;
+    --primary-tint: #1D3A49;
+    --accent: #7FCFEA;
+    --accent-dark: #9EDCF0;
+    --accent-tint: #17303C;
+    --butter: #7FCFEA;
+    --butter-tint: #17303C;
+    --border: #2A3F4E;
+    --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 10px 26px -14px rgba(0,0,0,0.55);
+    --grain: color-mix(in srgb, var(--primary) 10%, transparent);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1B24;
+  --surface: #16232E;
+  --surface-2: #1C2E3B;
+  --text: #E7F1F7;
+  --text-muted: #9FB6C4;
+  --primary: #6FB8DE;
+  --primary-dark: #8FCBE8;
+  --primary-tint: #1D3A49;
+  --accent: #7FCFEA;
+  --accent-dark: #9EDCF0;
+  --accent-tint: #17303C;
+  --butter: #7FCFEA;
+  --butter-tint: #17303C;
+  --border: #2A3F4E;
+  --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 10px 26px -14px rgba(0,0,0,0.55);
+  --grain: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+/* Shared auth page shell (register / login) */
+.auth-shell { min-height: 70vh; display: flex; align-items: center; justify-content: center; padding-block: 40px; }
+.auth-card {
+  width: 100%; max-width: 720px; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 24px 24px 6px 24px; box-shadow: var(--shadow); padding: 32px;
+}
+.auth-head { margin-bottom: 22px; }
+.auth-head .eyebrow-sm { font-family: 'Caveat', cursive; font-size: 19px; font-weight: 700; color: var(--primary-dark); }
+.auth-head h1 { font-size: clamp(24px, 3.4vw, 30px); margin-top: 2px; }
+.auth-head p { color: var(--text-muted); font-size: 14.5px; margin-top: 6px; }
+
+.form-section { margin-top: 22px; }
+.form-section .section-label {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--accent-dark); margin-bottom: 10px;
+}
+.field-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field.full { grid-column: 1 / -1; }
+.field label { font-size: 12.5px; font-weight: 600; color: var(--text-muted); }
+.field label .opt { font-weight: 400; font-style: italic; opacity: 0.8; }
+.field input, .field select {
+  font-family: inherit; font-size: 14.5px; padding: 10px 12px; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
+}
+.field input:focus-visible, .field select:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
+.field .error-text { font-size: 12px; color: var(--danger); min-height: 15px; }
+.field.has-error input, .field.has-error select { border-color: var(--danger); }
+
+.pref-group { display: flex; gap: 10px; flex-wrap: wrap; }
+.pref-pill {
+  flex: 1; min-width: 140px; border: 1.5px solid var(--border); border-radius: 14px; padding: 12px 14px;
+  cursor: pointer; display: flex; align-items: center; gap: 10px; background: var(--surface);
+}
+.pref-pill input { margin: 0; }
+.pref-pill.selected { border-color: var(--primary); background: var(--primary-tint); }
+.pref-pill .pref-title { font-weight: 600; font-size: 14px; }
+.pref-pill .pref-sub { font-size: 12px; color: var(--text-muted); }
+
+.form-banner {
+  border-radius: 12px; padding: 11px 14px; font-size: 13.5px; margin-top: 18px; display: none;
+}
+.form-banner.show { display: block; }
+.form-banner.error { background: var(--danger-tint); color: var(--danger); border: 1px solid var(--danger); }
+.form-banner.success { background: var(--primary-tint); color: var(--primary-dark); border: 1px solid var(--primary); }
+
+.auth-actions { margin-top: 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.auth-actions .switch-link { font-size: 13.5px; color: var(--text-muted); }
+.auth-actions .switch-link a { color: var(--primary-dark); font-weight: 600; text-decoration: none; }
+.auth-actions .switch-link a:hover { text-decoration: underline; }
+
+.code-callout {
+  margin-top: 18px; border-radius: 14px; border: 1.5px dashed var(--primary); background: var(--primary-tint);
+  padding: 14px 16px; display: none; align-items: center; gap: 12px;
+}
+.code-callout.show { display: flex; }
+.code-callout .code-label { font-size: 12px; color: var(--text-muted); }
+.code-callout .code-value { font-family: 'Fraunces', serif; font-weight: 700; font-size: 20px; color: var(--primary-dark); }
+
+/* dashboard */
+.dash-shell { padding-block: 34px 50px; }
+.dash-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 22px 22px 6px 22px;
+  box-shadow: var(--shadow); padding: 24px;
+}
+.dash-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+.dash-id { font-family: 'Fraunces', serif; font-weight: 700; font-size: 18px; color: var(--primary-dark); }
+.dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+.dash-field { background: var(--surface-2); border-radius: 14px; padding: 12px 14px; }
+.dash-field .lbl { font-size: 11.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.dash-field .val { font-size: 15px; font-weight: 600; margin-top: 3px; }

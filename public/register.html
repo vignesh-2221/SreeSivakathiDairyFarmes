@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create Your Account — Sree Sivasakthi Dairy Farm</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/theme-light-blue.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="nav">
+    <a class="brand" href="index.html" style="text-decoration:none;">
+      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="19" fill="var(--primary-tint)" stroke="var(--primary)" stroke-width="1.4"/>
+        <path d="M16 11h8l1.4 4.4c.5 1.6.9 3.3.9 5v9.1c0 1.4-1.1 2.5-2.5 2.5h-7.6a2.5 2.5 0 0 1-2.5-2.5v-9.1c0-1.7.4-3.4.9-5L16 11Z" stroke="var(--primary)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M15.4 13.5h9.2" stroke="var(--primary)" stroke-width="1.5"/>
+        <path d="M14.5 21c1.3.9 2.4 1.2 3.5.4 1.3-.9 2.2-.9 3.5 0 1.3.9 2.2.9 3.5 0" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      <div class="brand-text">
+        <div class="name">Sree Sivasakthi Dairy Farm</div>
+        <div class="tag">FRESH FROM FARM, DAILY</div>
+      </div>
+    </a>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="login.html" id="headerLoginLink">Log in</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap auth-shell">
+  <div class="auth-card">
+    <div class="auth-head">
+      <div class="eyebrow-sm">new customer</div>
+      <h1>Create Your Account</h1>
+      <p>Register once to place daily orders and manage your milk delivery online.</p>
+    </div>
+
+    <form id="registerForm" novalidate>
+      <div class="form-section">
+        <div class="section-label">Personal details</div>
+        <div class="field-grid">
+          <div class="field full" data-field="fullName">
+            <label for="fullName">Full name</label>
+            <input id="fullName" name="fullName" type="text" autocomplete="name" required>
+            <div class="error-text"></div>
+          </div>
+          <div class="field" data-field="mobileNumber">
+            <label for="mobileNumber">Mobile number</label>
+            <input id="mobileNumber" name="mobileNumber" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel" required>
+            <div class="error-text"></div>
+          </div>
+          <div class="field" data-field="whatsappNumber">
+            <label for="whatsappNumber">WhatsApp number <span class="opt">(optional)</span></label>
+            <input id="whatsappNumber" name="whatsappNumber" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel">
+            <div class="error-text"></div>
+          </div>
+          <div class="field full" data-field="email">
+            <label for="email">Email address <span class="opt">(optional)</span></label>
+            <input id="email" name="email" type="email" autocomplete="email">
+            <div class="error-text"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-label">Delivery address</div>
+        <div class="field-grid">
+          <div class="field" data-field="houseNumber">
+            <label for="houseNumber">House / door number</label>
+            <input id="houseNumber" name="houseNumber" type="text" autocomplete="address-line1" required>
+            <div class="error-text"></div>
+          </div>
+          <div class="field" data-field="street">
+            <label for="street">Street name</label>
+            <input id="street" name="street" type="text" autocomplete="address-line2" required>
+            <div class="error-text"></div>
+          </div>
+          <div class="field" data-field="area">
+            <label for="area">Area / locality</label>
+            <input id="area" name="area" type="text" required>
+            <div class="error-text"></div>
+          </div>
+          <div class="field" data-field="city">
+            <label for="city">City</label>
+            <input id="city" name="city" type="text" autocomplete="address-level2" required>
+            <div class="error-text"></div>
+          </div>
+          <div class="field" data-field="pincode">
+            <label for="pincode">Pincode</label>
+            <input id="pincode" name="pincode" type="text" inputmode="numeric" maxlength="6" autocomplete="postal-code" required>
+            <div class="error-text"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-label">Delivery preference</div>
+        <div class="field full" data-field="deliveryPreference">
+          <div class="pref-group" id="prefGroup">
+            <label class="pref-pill" data-shift="morning">
+              <input type="radio" name="deliveryPreference" value="morning">
+              <span>
+                <span class="pref-title">Morning round</span><br>
+                <span class="pref-sub">Delivered before breakfast</span>
+              </span>
+            </label>
+            <label class="pref-pill" data-shift="evening">
+              <input type="radio" name="deliveryPreference" value="evening">
+              <span>
+                <span class="pref-title">Evening round</span><br>
+                <span class="pref-sub">Delivered before dinner</span>
+              </span>
+            </label>
+          </div>
+          <div class="error-text"></div>
+        </div>
+        <div class="field-grid" style="margin-top:14px;">
+          <div class="field" data-field="dailyQuantity">
+            <label for="dailyQuantity">Daily milk quantity (litres)</label>
+            <input id="dailyQuantity" name="dailyQuantity" type="number" step="0.5" min="0.5" required>
+            <div class="error-text"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-label">Account security</div>
+        <div class="field-grid">
+          <div class="field" data-field="password">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="new-password" required>
+            <div class="error-text"></div>
+          </div>
+          <div class="field" data-field="confirmPassword">
+            <label for="confirmPassword">Confirm password</label>
+            <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" required>
+            <div class="error-text"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-banner" id="formBanner" role="alert"></div>
+      <div class="code-callout" id="codeCallout">
+        <div>
+          <div class="code-label">Account created — your Customer ID</div>
+          <div class="code-value" id="codeValue">—</div>
+        </div>
+      </div>
+
+      <div class="auth-actions">
+        <span class="switch-link">Already registered? <a href="login.html" id="switchLoginLink">Log in</a></span>
+        <button type="submit" class="btn btn-primary" id="submitBtn">Create Account</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('registerForm');
+  var banner = document.getElementById('formBanner');
+  var submitBtn = document.getElementById('submitBtn');
+  var codeCallout = document.getElementById('codeCallout');
+  var codeValue = document.getElementById('codeValue');
+  var prefGroup = document.getElementById('prefGroup');
+
+  var MOBILE_RE = /^[6-9]\d{9}$/;
+  var PINCODE_RE = /^[1-9]\d{5}$/;
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // If we arrived here via an "Order Now" gate (or any other flow that
+  // wants the customer back at a specific page), carry that destination
+  // through registration and through the "Log in" links on this page.
+  function safeNext(path) {
+    if (!path) return null;
+    if (path.indexOf('://') !== -1) return null;
+    if (path.indexOf('//') === 0) return null;
+    return path;
+  }
+  var nextParam = safeNext(new URLSearchParams(window.location.search).get('next'));
+  var postAuthDest = nextParam || 'dashboard.html';
+  if (nextParam) {
+    var loginNext = '?next=' + encodeURIComponent(nextParam);
+    var headerLoginLink = document.getElementById('headerLoginLink');
+    var switchLoginLink = document.getElementById('switchLoginLink');
+    if (headerLoginLink) headerLoginLink.href = 'login.html' + loginNext;
+    if (switchLoginLink) switchLoginLink.href = 'login.html' + loginNext;
+  }
+
+  prefGroup.addEventListener('change', function () {
+    Array.prototype.forEach.call(prefGroup.querySelectorAll('.pref-pill'), function (pill) {
+      var input = pill.querySelector('input');
+      pill.classList.toggle('selected', input.checked);
+    });
+  });
+
+  function fieldEl(name) {
+    return form.querySelector('[data-field="' + name + '"]');
+  }
+  function setFieldError(name, message) {
+    var el = fieldEl(name);
+    if (!el) return;
+    var errEl = el.querySelector('.error-text');
+    if (message) {
+      el.classList.add('has-error');
+      if (errEl) errEl.textContent = message;
+    } else {
+      el.classList.remove('has-error');
+      if (errEl) errEl.textContent = '';
+    }
+  }
+  function clearAllErrors() {
+    Array.prototype.forEach.call(form.querySelectorAll('.field'), function (el) {
+      el.classList.remove('has-error');
+      var errEl = el.querySelector('.error-text');
+      if (errEl) errEl.textContent = '';
+    });
+  }
+  function showBanner(kind, message) {
+    banner.className = 'form-banner show ' + kind;
+    banner.textContent = message;
+  }
+  function hideBanner() {
+    banner.className = 'form-banner';
+    banner.textContent = '';
+  }
+
+  function readForm() {
+    var fd = new FormData(form);
+    return {
+      fullName: (fd.get('fullName') || '').toString().trim(),
+      mobileNumber: (fd.get('mobileNumber') || '').toString().trim(),
+      whatsappNumber: (fd.get('whatsappNumber') || '').toString().trim(),
+      email: (fd.get('email') || '').toString().trim(),
+      houseNumber: (fd.get('houseNumber') || '').toString().trim(),
+      street: (fd.get('street') || '').toString().trim(),
+      area: (fd.get('area') || '').toString().trim(),
+      city: (fd.get('city') || '').toString().trim(),
+      pincode: (fd.get('pincode') || '').toString().trim(),
+      deliveryPreference: (fd.get('deliveryPreference') || '').toString(),
+      dailyQuantity: (fd.get('dailyQuantity') || '').toString().trim(),
+      password: (fd.get('password') || '').toString(),
+      confirmPassword: (fd.get('confirmPassword') || '').toString(),
+    };
+  }
+
+  function validateClientSide(v) {
+    var errors = {};
+    if (!v.fullName || v.fullName.length < 2) errors.fullName = 'Enter the customer’s full name.';
+    if (!v.mobileNumber) errors.mobileNumber = 'Mobile number is required.';
+    else if (!MOBILE_RE.test(v.mobileNumber)) errors.mobileNumber = 'Enter a valid 10-digit mobile number.';
+    if (v.whatsappNumber && !MOBILE_RE.test(v.whatsappNumber)) errors.whatsappNumber = 'Enter a valid 10-digit number, or leave it blank.';
+    if (v.email && !EMAIL_RE.test(v.email)) errors.email = 'Enter a valid email address, or leave it blank.';
+    if (!v.houseNumber) errors.houseNumber = 'House/door number is required.';
+    if (!v.street) errors.street = 'Street name is required.';
+    if (!v.area) errors.area = 'Area/locality is required.';
+    if (!v.city) errors.city = 'City is required.';
+    if (!v.pincode) errors.pincode = 'Pincode is required.';
+    else if (!PINCODE_RE.test(v.pincode)) errors.pincode = 'Enter a valid 6-digit pincode.';
+    if (v.deliveryPreference !== 'morning' && v.deliveryPreference !== 'evening') errors.deliveryPreference = 'Choose a morning or evening delivery round.';
+    var qty = parseFloat(v.dailyQuantity);
+    if (!v.dailyQuantity || isNaN(qty) || qty <= 0) errors.dailyQuantity = 'Enter the daily milk quantity in litres.';
+    if (!v.password || v.password.length < 8) errors.password = 'Password must be at least 8 characters.';
+    if (v.confirmPassword !== v.password) errors.confirmPassword = 'Passwords do not match.';
+    return errors;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    hideBanner();
+    clearAllErrors();
+    codeCallout.classList.remove('show');
+
+    var values = readForm();
+    var errors = validateClientSide(values);
+
+    if (Object.keys(errors).length > 0) {
+      Object.keys(errors).forEach(function (key) { setFieldError(key, errors[key]); });
+      showBanner('error', 'Please fix the highlighted fields below.');
+      var firstKey = Object.keys(errors)[0];
+      var firstEl = fieldEl(firstKey);
+      if (firstEl) firstEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Creating account…';
+
+    fetch('/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify(values),
+    })
+      .then(function (res) { return res.json().then(function (data) { return { status: res.status, data: data }; }); })
+      .then(function (result) {
+        if (result.status === 201) {
+          codeValue.textContent = result.data.customer.customerCode;
+          codeCallout.classList.add('show');
+          showBanner('success', 'Account created! Redirecting you now…');
+          setTimeout(function () { window.location.href = postAuthDest; }, 1400);
+          return;
+        }
+        if (result.status === 409 && result.data.error === 'DUPLICATE_MOBILE') {
+          setFieldError('mobileNumber', 'This mobile number is already registered.');
+          showBanner('error', result.data.message + ' ');
+          banner.innerHTML = result.data.message + ' <a href="login.html' + (nextParam ? '?next=' + encodeURIComponent(nextParam) : '') + '" style="color:inherit;text-decoration:underline;font-weight:600;">Log in</a>';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Create Account';
+          return;
+        }
+        if (result.status === 400 && result.data.fieldErrors) {
+          Object.keys(result.data.fieldErrors).forEach(function (key) { setFieldError(key, result.data.fieldErrors[key]); });
+          showBanner('error', 'Please fix the highlighted fields below.');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Create Account';
+          return;
+        }
+        showBanner('error', (result.data && result.data.message) || 'Something went wrong. Please try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Create Account';
+      })
+      .catch(function () {
+        showBanner('error', 'Could not reach the server. Make sure it is running and try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Create Account';
+      });
+  });
+})();
+</script>
+</body>
+</html>

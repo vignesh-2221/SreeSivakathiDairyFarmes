@@ -1,0 +1,146 @@
+/*
+  Traditional Tamil Nadu Farm Heritage theme — Home Page only.
+  Palette drawn from real material culture: terracotta clay pots (mann
+  paanai), turmeric, banana-leaf green, and a sparing kumkum maroon —
+  rather than a generic "warm neutral" palette. Register/Login/Dashboard
+  keep the existing light-blue theme; the admin panel keeps its own.
+*/
+:root {
+  --bg: #FBF6EC;
+  --surface: #FFFDF8;
+  --surface-2: #F5E4C8;
+  --text: #3A2416;
+  --text-muted: #7C6449;
+  --primary: #8A3D22;
+  --primary-dark: #632A17;
+  --primary-tint: #F0DCC9;
+  --accent: #C4901F;
+  --accent-dark: #9C7217;
+  --accent-tint: #F7E7BE;
+  --leaf: #4F6B3A;
+  --leaf-tint: #E6EBDA;
+  --maroon: #8C2F3B;
+  --maroon-tint: #F3DEE1;
+  --butter: #C4901F;
+  --butter-tint: #F7E7BE;
+  --border: #E6D2AE;
+  --danger: #A6442F;
+  --danger-tint: #F3DFD9;
+  --shadow: 0 1px 2px rgba(58,36,22,0.08), 0 10px 26px -14px rgba(58,36,22,0.24);
+  --grain: color-mix(in srgb, var(--primary) 7%, transparent);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #201509;
+    --surface: #2B1D10;
+    --surface-2: #362513;
+    --text: #F3E7D2;
+    --text-muted: #C7AE8A;
+    --primary: #D98A54;
+    --primary-dark: #E8A472;
+    --primary-tint: #3A2818;
+    --accent: #E0B84A;
+    --accent-dark: #EDC968;
+    --accent-tint: #3A2E12;
+    --leaf: #8FAE72;
+    --leaf-tint: #2A3320;
+    --maroon: #C97985;
+    --maroon-tint: #3A2028;
+    --butter: #E0B84A;
+    --butter-tint: #3A2E12;
+    --border: #4A3620;
+    --danger: #E08469;
+    --danger-tint: #3A241E;
+    --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 10px 26px -14px rgba(0,0,0,0.55);
+    --grain: color-mix(in srgb, var(--primary) 10%, transparent);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #201509;
+  --surface: #2B1D10;
+  --surface-2: #362513;
+  --text: #F3E7D2;
+  --text-muted: #C7AE8A;
+  --primary: #D98A54;
+  --primary-dark: #E8A472;
+  --primary-tint: #3A2818;
+  --accent: #E0B84A;
+  --accent-dark: #EDC968;
+  --accent-tint: #3A2E12;
+  --leaf: #8FAE72;
+  --leaf-tint: #2A3320;
+  --maroon: #C97985;
+  --maroon-tint: #3A2028;
+  --butter: #E0B84A;
+  --butter-tint: #3A2E12;
+  --border: #4A3620;
+  --danger: #E08469;
+  --danger-tint: #3A241E;
+  --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 10px 26px -14px rgba(0,0,0,0.55);
+  --grain: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+/* Header: a soft kolam dot/star texture instead of a flat blurred panel */
+header.site {
+  background-color: color-mix(in srgb, var(--bg) 90%, transparent);
+  background-image: radial-gradient(circle, var(--accent) 1px, transparent 1.2px);
+  background-size: 16px 16px;
+  background-position: 0 0;
+}
+
+/* Eyebrow tags: a dotted kolam-style flourish instead of the farmhouse-cursive look */
+.hero .eyebrow,
+.section-head .eyebrow-sm {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--primary-dark);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transform: none;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.hero .eyebrow::before, .hero .eyebrow::after,
+.section-head .eyebrow-sm::before, .section-head .eyebrow-sm::after {
+  content: '';
+  width: 28px; height: 5px; flex: none;
+  background-image: radial-gradient(circle, var(--accent) 1.6px, transparent 1.8px);
+  background-size: 7px 7px;
+  background-repeat: repeat-x;
+  background-position: center;
+  opacity: 0.9;
+}
+
+/* Kolam dot-grid divider: a traditional threshold pattern used between sections */
+.kolam-divider {
+  height: 26px;
+  margin-inline: -20px;
+  background-color: var(--surface-2);
+  background-image:
+    radial-gradient(circle at 9px 9px, var(--accent) 1.8px, transparent 2px),
+    radial-gradient(circle at 18px 18px, var(--primary) 1.8px, transparent 2px);
+  background-size: 18px 18px;
+}
+.kolam-divider.on-dark {
+  background-color: var(--primary-dark);
+  background-image:
+    radial-gradient(circle at 9px 9px, var(--accent) 1.8px, transparent 2px),
+    radial-gradient(circle at 18px 18px, color-mix(in srgb, var(--bg) 70%, transparent) 1.6px, transparent 1.9px);
+}
+
+/* Product image placeholders: a fine kolam dot texture instead of a flat tint */
+.product-card .image-placeholder {
+  background-color: var(--primary-tint);
+  background-image: radial-gradient(circle, var(--accent) 1.1px, transparent 1.3px);
+  background-size: 15px 15px;
+}
+.product-card .image-placeholder svg { position: relative; z-index: 1; }
+
+.about-badges .about-badge:nth-child(3n+2) { background: var(--leaf-tint); color: var(--leaf); }
+
+/* .has-photo image fill, .hero-art-photo sizing and .heritage-card are theme-agnostic
+   and now live in home.css so they work under any theme. */
